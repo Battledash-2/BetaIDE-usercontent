@@ -13,6 +13,13 @@ function updateDatabase() {
 
 setInterval(updateDatabase, 50);
 
+const xssParse = (code)=>{
+	return
+		code.replace(/&/gmi, '&amp;')
+		.replace(/</gmi, '&lt;')
+		.replace(/>/gmi, '&gt;');
+}
+
 function mimeFromName(fname) {
 	let mimeTypes = {
 		"html": "text/html",
@@ -39,7 +46,14 @@ function mimeFromName(fname) {
 app.get('/', (req,res)=>{
 	res.send('404 Please check your spelling');
 });
+app.get('/view/*', (req,res)=>{
+	res.redirect('/p/'+req.url);
+});
 app.get('/p/view/*', (req,res)=>{
+	if(!req.url.endsWith('/')) {
+		return res.redirect(req.url + '/');
+	}
+
 	let vid = req.url.substring(8);
 	// res.send('Recieved ('+vid+') coming soon.');
 	let split = vid.split('/');
