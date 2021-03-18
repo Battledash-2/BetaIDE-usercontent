@@ -4,8 +4,14 @@ const fs = require('fs'),
 	app = express(),
 	url = `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`;
 
-const Database = require('replpersist'),
+const Database = require('./replmodified/index.js');
+let proj = new Database('user_project', 0.1, {});
+
+function updateDatabase() {
 	proj = new Database('user_project', 0.1, {});
+}
+
+setInterval(updateDatabase, 50);
 
 function mimeFromName(fname) {
 	let mimeTypes = {
