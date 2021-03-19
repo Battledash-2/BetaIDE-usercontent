@@ -8,7 +8,11 @@ const Database = require('./replmodified/index.js');
 let proj = new Database('user_project', 0.1, {});
 
 function updateDatabase() {
-	proj = new Database('user_project', 0.1, {});
+	try {
+		proj = new Database('user_project', 0.1, {});
+	} catch(e) {
+		console.log('[Database] Error updating database.');
+	}
 }
 
 setInterval(updateDatabase, 50);
